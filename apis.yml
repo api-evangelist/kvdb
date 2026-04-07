@@ -1,5 +1,6 @@
 aid: kvdb
-url: https://raw.githubusercontent.com/api-evangelist/kvdb/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/kvdb/refs/heads/main/apis.yml
 apis:
   - aid: kvdb:kvdb
     name: KVdb
@@ -10,8 +11,8 @@ apis:
       - url: ' https://kvdb.io/'
         type: Documentation
     description: >-
-      Stop wasting time setting up NoSQL databases. Get a key-value database and
-      web API up and running in seconds. 
+      Stop wasting time setting up NoSQL databases. Get a key-value database and web
+      API up and running in seconds.
 name: KVdb
 tags:
   - Databases
@@ -24,8 +25,8 @@ created: '2025-02-08'
 modified: '2026-03-16'
 position: Consumer
 description: >-
-  Stop wasting time setting up NoSQL databases. Get a key-value database and web
-  API up and running in seconds. 
+  Stop wasting time setting up NoSQL databases. Get a key-value database and web API
+  up and running in seconds.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
