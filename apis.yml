@@ -1,11 +1,9 @@
 aid: kvdb
-url: 
-  https://raw.githubusercontent.com/api-evangelist/kvdb/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/kvdb/refs/heads/main/apis.yml
 apis:
   - aid: kvdb:kvdb
     name: KVdb
-    tags:
-      - API
+    tags: []
     humanURL: ' https://kvdb.io/'
     properties:
       - url: ' https://kvdb.io/'
@@ -16,8 +14,8 @@ apis:
 name: KVdb
 tags:
   - Databases
-  - NoSQL
   - Key-Value
+  - NoSQL
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
