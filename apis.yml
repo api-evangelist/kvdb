@@ -35,7 +35,7 @@ apis:
     properties:
       - type: Documentation
         url: https://kvdb.io/
-      - type: Getting Started
+      - type: GettingStarted
         url: https://kvdb.io/
       - type: OpenAPI
         url: openapi/kvdb-openapi.yml
