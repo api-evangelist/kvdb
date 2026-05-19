@@ -1,0 +1,216 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: KVdb API — Keys
+  description: 'KVdb API — Keys. 5 operations. Lead operation: List keys. Self-contained Naftiko capability covering one Kvdb
+    business surface.'
+  tags:
+  - Kvdb
+  - Keys
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    KVDB_API_KEY: KVDB_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: kvdb-keys
+    baseUri: https://kvdb.io
+    description: KVdb API — Keys business capability. Self-contained, no shared references.
+    resources:
+    - name: bucket_id
+      path: /{bucket_id}
+      operations:
+      - name: listkeys
+        method: GET
+        description: List keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: prefix
+          in: query
+          type: string
+        - name: limit
+          in: query
+          type: integer
+        - name: format
+          in: query
+          type: string
+    - name: bucket_id-key
+      path: /{bucket_id}/{key}
+      operations:
+      - name: getkey
+        method: GET
+        description: Get key value
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: setkey
+        method: POST
+        description: Set key value
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: patchkey
+        method: PATCH
+        description: Increment or decrement numeric value
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletekey
+        method: DELETE
+        description: Delete key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: secret_key
+      value: '{{env.KVDB_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: kvdb-keys-rest
+    port: 8080
+    description: REST adapter for KVdb API — Keys. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/{bucket-id}
+      name: bucket-id
+      description: REST surface for bucket_id.
+      operations:
+      - method: GET
+        name: listkeys
+        description: List keys
+        call: kvdb-keys.listkeys
+        with:
+          prefix: rest.prefix
+          limit: rest.limit
+          format: rest.format
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/{bucket-id}/{key}
+      name: bucket-id-key
+      description: REST surface for bucket_id-key.
+      operations:
+      - method: GET
+        name: getkey
+        description: Get key value
+        call: kvdb-keys.getkey
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: setkey
+        description: Set key value
+        call: kvdb-keys.setkey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: patchkey
+        description: Increment or decrement numeric value
+        call: kvdb-keys.patchkey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletekey
+        description: Delete key
+        call: kvdb-keys.deletekey
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: kvdb-keys-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for KVdb API — Keys. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-keys
+      description: List keys
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: kvdb-keys.listkeys
+      with:
+        prefix: tools.prefix
+        limit: tools.limit
+        format: tools.format
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-key-value
+      description: Get key value
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: kvdb-keys.getkey
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: set-key-value
+      description: Set key value
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: kvdb-keys.setkey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: increment-decrement-numeric-value
+      description: Increment or decrement numeric value
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: kvdb-keys.patchkey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-key
+      description: Delete key
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: kvdb-keys.deletekey
+      outputParameters:
+      - type: object
+        mapping: $.
