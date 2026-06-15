@@ -1,0 +1,318 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "KVdb API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Buckets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kvdb.io/",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "email",
+                  "value": ""
+                },
+                {
+                  "name": "secret_key",
+                  "value": ""
+                },
+                {
+                  "name": "read_key",
+                  "value": ""
+                },
+                {
+                  "name": "write_key",
+                  "value": ""
+                },
+                {
+                  "name": "default_ttl",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create a new KVdb bucket. An email is required, optional secret_key, read_key, write_key, and default_ttl can be supplied."
+        },
+        {
+          "info": {
+            "name": "Update bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://kvdb.io/:bucket_id",
+            "params": [
+              {
+                "name": "bucket_id",
+                "value": "",
+                "type": "path",
+                "description": "KVdb bucket identifier"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "write_key",
+                  "value": ""
+                },
+                {
+                  "name": "read_key",
+                  "value": ""
+                },
+                {
+                  "name": "secret_key",
+                  "value": ""
+                },
+                {
+                  "name": "default_ttl",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update bucket settings such as write_key or default_ttl."
+        },
+        {
+          "info": {
+            "name": "Delete bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kvdb.io/:bucket_id",
+            "params": [
+              {
+                "name": "bucket_id",
+                "value": "",
+                "type": "path",
+                "description": "KVdb bucket identifier"
+              }
+            ]
+          },
+          "docs": "Delete the bucket and all its contents."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kvdb.io/:bucket_id",
+            "params": [
+              {
+                "name": "bucket_id",
+                "value": "",
+                "type": "path",
+                "description": "KVdb bucket identifier"
+              },
+              {
+                "name": "prefix",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List keys in the bucket, optionally filtered by a prefix."
+        },
+        {
+          "info": {
+            "name": "Get key value",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kvdb.io/:bucket_id/:key",
+            "params": [
+              {
+                "name": "bucket_id",
+                "value": "",
+                "type": "path",
+                "description": "KVdb bucket identifier"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "Key within the bucket"
+              }
+            ]
+          },
+          "docs": "Retrieve the value stored at the given key."
+        },
+        {
+          "info": {
+            "name": "Set key value",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kvdb.io/:bucket_id/:key",
+            "params": [
+              {
+                "name": "bucket_id",
+                "value": "",
+                "type": "path",
+                "description": "KVdb bucket identifier"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "Key within the bucket"
+              }
+            ]
+          },
+          "docs": "Store a value at the given key (up to 16 KB by default)."
+        },
+        {
+          "info": {
+            "name": "Increment or decrement numeric value",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://kvdb.io/:bucket_id/:key",
+            "params": [
+              {
+                "name": "bucket_id",
+                "value": "",
+                "type": "path",
+                "description": "KVdb bucket identifier"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "Key within the bucket"
+              }
+            ]
+          },
+          "docs": "Atomically increment or decrement a numeric value at the given key."
+        },
+        {
+          "info": {
+            "name": "Delete key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kvdb.io/:bucket_id/:key",
+            "params": [
+              {
+                "name": "bucket_id",
+                "value": "",
+                "type": "path",
+                "description": "KVdb bucket identifier"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "Key within the bucket"
+              }
+            ]
+          },
+          "docs": "Delete the key and its value from the bucket."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Scripts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute script",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kvdb.io/:bucket_id/scripts/:script_name",
+            "params": [
+              {
+                "name": "bucket_id",
+                "value": "",
+                "type": "path",
+                "description": "KVdb bucket identifier"
+              },
+              {
+                "name": "script_name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Execute a previously uploaded script and return its output."
+        },
+        {
+          "info": {
+            "name": "Upload script",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://kvdb.io/:bucket_id/scripts/:script_name",
+            "params": [
+              {
+                "name": "bucket_id",
+                "value": "",
+                "type": "path",
+                "description": "KVdb bucket identifier"
+              },
+              {
+                "name": "script_name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Upload a custom Lua script to the bucket."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
