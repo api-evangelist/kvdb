@@ -5,7 +5,7 @@ description: >-
   API. Buckets act as namespaces for keys, with built-in access control via secret, read, and write keys, custom Lua
   scripts, and per-bucket TTLs.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Databases
   - Key-Value
