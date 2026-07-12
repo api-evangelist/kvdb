@@ -1,0 +1,22 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/kvdb-openapi.yml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - query
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: Bucket secret key passed via HTTP Basic auth
+  sources:
+  - openapi/kvdb-openapi.yml
+- name: secretKeyQuery
+  type: apiKey
+  in: query
+  parameter: secret_key
+  sources:
+  - openapi/kvdb-openapi.yml

@@ -38,10 +38,16 @@ apis:
       - type: OpenAPI
         url: openapi/kvdb-openapi.yml
 common:
+  - type: DomainSecurity
+    url: security/kvdb-domain-security.yml
+  - type: Authentication
+    url: authentication/kvdb-authentication.yml
   - type: Website
     url: https://kvdb.io/
   - type: Documentation
     url: https://kvdb.io/
+  - url: https://blog.kvdb.io/feed.rss
+    type: Blog
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
