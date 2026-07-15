@@ -38,6 +38,8 @@ apis:
       - type: OpenAPI
         url: openapi/kvdb-openapi.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/kvdb-agentic-access.yml
   - type: DomainSecurity
     url: security/kvdb-domain-security.yml
   - type: Authentication
