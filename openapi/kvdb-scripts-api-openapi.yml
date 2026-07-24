@@ -1,0 +1,77 @@
+openapi: 3.1.0
+info:
+  title: KVdb Buckets Scripts API
+  description: KVdb is a hosted serverless key-value database with a simple REST API. Buckets are namespaces of key-value pairs accessed over HTTPS using standard methods (GET, POST, PATCH, DELETE). KVdb supports access control via secret, read, and write keys, custom Lua scripts, and per-bucket TTLs.
+  version: 1.0.0
+  contact:
+    name: KVdb
+    url: https://kvdb.io/
+  termsOfService: https://kvdb.io/
+servers:
+- url: https://kvdb.io
+  description: KVdb production endpoint
+security:
+- basicAuth: []
+- secretKeyQuery: []
+tags:
+- name: Scripts
+  description: Custom Lua script management and execution
+paths:
+  /{bucket_id}/scripts/{script_name}:
+    parameters:
+    - $ref: '#/components/parameters/BucketId'
+    - in: path
+      name: script_name
+      required: true
+      schema:
+        type: string
+    put:
+      tags:
+      - Scripts
+      summary: Upload script
+      description: Upload a custom Lua script to the bucket.
+      operationId: uploadScript
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              description: Lua script source
+      responses:
+        '200':
+          description: Script uploaded
+    get:
+      tags:
+      - Scripts
+      summary: Execute script
+      description: Execute a previously uploaded script and return its output.
+      operationId: executeScript
+      responses:
+        '200':
+          description: Script output
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  parameters:
+    BucketId:
+      in: path
+      name: bucket_id
+      required: true
+      schema:
+        type: string
+      description: KVdb bucket identifier
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Bucket secret key passed via HTTP Basic auth
+    secretKeyQuery:
+      type: apiKey
+      in: query
+      name: secret_key
+externalDocs:
+  description: KVdb Documentation
+  url: https://kvdb.io/

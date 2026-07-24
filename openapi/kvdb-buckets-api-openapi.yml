@@ -1,0 +1,110 @@
+openapi: 3.1.0
+info:
+  title: KVdb Buckets API
+  description: KVdb is a hosted serverless key-value database with a simple REST API. Buckets are namespaces of key-value pairs accessed over HTTPS using standard methods (GET, POST, PATCH, DELETE). KVdb supports access control via secret, read, and write keys, custom Lua scripts, and per-bucket TTLs.
+  version: 1.0.0
+  contact:
+    name: KVdb
+    url: https://kvdb.io/
+  termsOfService: https://kvdb.io/
+servers:
+- url: https://kvdb.io
+  description: KVdb production endpoint
+security:
+- basicAuth: []
+- secretKeyQuery: []
+tags:
+- name: Buckets
+  description: Bucket lifecycle operations
+paths:
+  /:
+    post:
+      tags:
+      - Buckets
+      summary: Create bucket
+      description: Create a new KVdb bucket. An email is required, optional secret_key, read_key, write_key, and default_ttl can be supplied.
+      operationId: createBucket
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                secret_key:
+                  type: string
+                read_key:
+                  type: string
+                write_key:
+                  type: string
+                default_ttl:
+                  type: integer
+      responses:
+        '200':
+          description: Bucket created
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Bucket identifier
+  /{bucket_id}:
+    parameters:
+    - $ref: '#/components/parameters/BucketId'
+    patch:
+      tags:
+      - Buckets
+      summary: Update bucket
+      description: Update bucket settings such as write_key or default_ttl.
+      operationId: updateBucket
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                write_key:
+                  type: string
+                read_key:
+                  type: string
+                secret_key:
+                  type: string
+                default_ttl:
+                  type: integer
+      responses:
+        '200':
+          description: Bucket updated
+    delete:
+      tags:
+      - Buckets
+      summary: Delete bucket
+      description: Delete the bucket and all its contents.
+      operationId: deleteBucket
+      responses:
+        '200':
+          description: Bucket deleted
+components:
+  parameters:
+    BucketId:
+      in: path
+      name: bucket_id
+      required: true
+      schema:
+        type: string
+      description: KVdb bucket identifier
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Bucket secret key passed via HTTP Basic auth
+    secretKeyQuery:
+      type: apiKey
+      in: query
+      name: secret_key
+externalDocs:
+  description: KVdb Documentation
+  url: https://kvdb.io/

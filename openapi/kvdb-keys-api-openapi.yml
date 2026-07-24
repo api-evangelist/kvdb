@@ -1,0 +1,150 @@
+openapi: 3.1.0
+info:
+  title: KVdb Buckets Keys API
+  description: KVdb is a hosted serverless key-value database with a simple REST API. Buckets are namespaces of key-value pairs accessed over HTTPS using standard methods (GET, POST, PATCH, DELETE). KVdb supports access control via secret, read, and write keys, custom Lua scripts, and per-bucket TTLs.
+  version: 1.0.0
+  contact:
+    name: KVdb
+    url: https://kvdb.io/
+  termsOfService: https://kvdb.io/
+servers:
+- url: https://kvdb.io
+  description: KVdb production endpoint
+security:
+- basicAuth: []
+- secretKeyQuery: []
+tags:
+- name: Keys
+  description: Key-value operations within a bucket
+paths:
+  /{bucket_id}:
+    parameters:
+    - $ref: '#/components/parameters/BucketId'
+    get:
+      tags:
+      - Keys
+      summary: List keys
+      description: List keys in the bucket, optionally filtered by a prefix.
+      operationId: listKeys
+      parameters:
+      - in: query
+        name: prefix
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+      - in: query
+        name: format
+        required: false
+        schema:
+          type: string
+          enum:
+          - json
+          - text
+      responses:
+        '200':
+          description: List of keys
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+            text/plain:
+              schema:
+                type: string
+  /{bucket_id}/{key}:
+    parameters:
+    - $ref: '#/components/parameters/BucketId'
+    - $ref: '#/components/parameters/Key'
+    get:
+      tags:
+      - Keys
+      summary: Get key value
+      description: Retrieve the value stored at the given key.
+      operationId: getKey
+      responses:
+        '200':
+          description: Value retrieved
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Key not found
+    post:
+      tags:
+      - Keys
+      summary: Set key value
+      description: Store a value at the given key (up to 16 KB by default).
+      operationId: setKey
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Value stored
+    patch:
+      tags:
+      - Keys
+      summary: Increment or decrement numeric value
+      description: Atomically increment or decrement a numeric value at the given key.
+      operationId: patchKey
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              description: Increment value (positive or negative integer)
+      responses:
+        '200':
+          description: New value
+          content:
+            text/plain:
+              schema:
+                type: string
+    delete:
+      tags:
+      - Keys
+      summary: Delete key
+      description: Delete the key and its value from the bucket.
+      operationId: deleteKey
+      responses:
+        '200':
+          description: Key deleted
+components:
+  parameters:
+    BucketId:
+      in: path
+      name: bucket_id
+      required: true
+      schema:
+        type: string
+      description: KVdb bucket identifier
+    Key:
+      in: path
+      name: key
+      required: true
+      schema:
+        type: string
+      description: Key within the bucket
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Bucket secret key passed via HTTP Basic auth
+    secretKeyQuery:
+      type: apiKey
+      in: query
+      name: secret_key
+externalDocs:
+  description: KVdb Documentation
+  url: https://kvdb.io/
