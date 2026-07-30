@@ -5,7 +5,20 @@ description: >-
   API. Buckets act as namespaces for keys, with built-in access control via secret, read, and write keys, custom Lua
   scripts, and per-bucket TTLs.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/kvdb.png
 tags:
   - Databases
   - Key-Value
@@ -18,25 +31,45 @@ specificationVersion: '0.19'
 access: 3rd-Party
 position: Consumer
 apis:
-  - aid: kvdb:kvdb
-    name: KVdb
-    description: >-
-      KVdb provides a hosted, serverless key-value database accessible over a simple REST API. Operations include
-      creating and managing buckets, setting and retrieving values, atomic numeric increments, prefix-based key listing,
-      and uploading and executing custom Lua scripts.
-    humanURL: https://kvdb.io/
-    tags:
-      - Databases
-      - Key-Value
-      - REST API
-      - Serverless
-    properties:
-      - type: Documentation
-        url: https://kvdb.io/
-      - type: GettingStarted
-        url: https://kvdb.io/
-      - type: OpenAPI
-        url: openapi/kvdb-openapi.yml
+- aid: kvdb:kvdb-buckets-api
+  name: KVdb Buckets API
+  description: Bucket lifecycle operations
+  humanURL: https://kvdb.io/
+  tags:
+  - Buckets
+  properties:
+  - type: OpenAPI
+    url: openapi/kvdb-buckets-api-openapi.yml
+  - type: Documentation
+    url: https://kvdb.io/
+  - type: GettingStarted
+    url: https://kvdb.io/
+- aid: kvdb:kvdb-keys-api
+  name: KVdb Keys API
+  description: Key-value operations within a bucket
+  humanURL: https://kvdb.io/
+  tags:
+  - Keys
+  properties:
+  - type: OpenAPI
+    url: openapi/kvdb-keys-api-openapi.yml
+  - type: Documentation
+    url: https://kvdb.io/
+  - type: GettingStarted
+    url: https://kvdb.io/
+- aid: kvdb:kvdb-scripts-api
+  name: KVdb Scripts API
+  description: Custom Lua script management and execution
+  humanURL: https://kvdb.io/
+  tags:
+  - Scripts
+  properties:
+  - type: OpenAPI
+    url: openapi/kvdb-scripts-api-openapi.yml
+  - type: Documentation
+    url: https://kvdb.io/
+  - type: GettingStarted
+    url: https://kvdb.io/
 common:
   - type: AgenticAccess
     url: agentic-access/kvdb-agentic-access.yml
