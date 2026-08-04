@@ -1,0 +1,18 @@
+{
+  "provider": "kvdb",
+  "sources": [
+    "kvdb-buckets-api-openapi.yml",
+    "kvdb-keys-api-openapi.yml",
+    "kvdb-scripts-api-openapi.yml"
+  ],
+  "outputs": [
+    "kvdb-buckets-api-openapi.yml",
+    "kvdb-keys-api-openapi.yml",
+    "kvdb-scripts-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

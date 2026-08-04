@@ -1,0 +1,262 @@
+openapi: 3.1.0
+info:
+  title: KVdb API
+  description: >-
+    KVdb is a hosted serverless key-value database with a simple REST API.
+    Buckets are namespaces of key-value pairs accessed over HTTPS using
+    standard methods (GET, POST, PATCH, DELETE). KVdb supports access control
+    via secret, read, and write keys, custom Lua scripts, and per-bucket TTLs.
+  version: '1.0.0'
+  contact:
+    name: KVdb
+    url: https://kvdb.io/
+  termsOfService: https://kvdb.io/
+externalDocs:
+  description: KVdb Documentation
+  url: https://kvdb.io/
+servers:
+  - url: https://kvdb.io
+    description: KVdb production endpoint
+tags:
+  - name: Buckets
+    description: Bucket lifecycle operations
+  - name: Keys
+    description: Key-value operations within a bucket
+  - name: Scripts
+    description: Custom Lua script management and execution
+security:
+  - basicAuth: []
+  - secretKeyQuery: []
+paths:
+  /:
+    post:
+      tags:
+        - Buckets
+      summary: Create bucket
+      description: Create a new KVdb bucket. An email is required, optional secret_key, read_key, write_key, and default_ttl can be supplied.
+      operationId: createBucket
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                secret_key:
+                  type: string
+                read_key:
+                  type: string
+                write_key:
+                  type: string
+                default_ttl:
+                  type: integer
+      responses:
+        '200':
+          description: Bucket created
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Bucket identifier
+  /{bucket_id}:
+    parameters:
+      - $ref: '#/components/parameters/BucketId'
+    patch:
+      tags:
+        - Buckets
+      summary: Update bucket
+      description: Update bucket settings such as write_key or default_ttl.
+      operationId: updateBucket
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                write_key:
+                  type: string
+                read_key:
+                  type: string
+                secret_key:
+                  type: string
+                default_ttl:
+                  type: integer
+      responses:
+        '200':
+          description: Bucket updated
+    delete:
+      tags:
+        - Buckets
+      summary: Delete bucket
+      description: Delete the bucket and all its contents.
+      operationId: deleteBucket
+      responses:
+        '200':
+          description: Bucket deleted
+    get:
+      tags:
+        - Keys
+      summary: List keys
+      description: List keys in the bucket, optionally filtered by a prefix.
+      operationId: listKeys
+      parameters:
+        - in: query
+          name: prefix
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: limit
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: format
+          required: false
+          schema:
+            type: string
+            enum:
+              - json
+              - text
+      responses:
+        '200':
+          description: List of keys
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+            text/plain:
+              schema:
+                type: string
+  /{bucket_id}/{key}:
+    parameters:
+      - $ref: '#/components/parameters/BucketId'
+      - $ref: '#/components/parameters/Key'
+    get:
+      tags:
+        - Keys
+      summary: Get key value
+      description: Retrieve the value stored at the given key.
+      operationId: getKey
+      responses:
+        '200':
+          description: Value retrieved
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Key not found
+    post:
+      tags:
+        - Keys
+      summary: Set key value
+      description: Store a value at the given key (up to 16 KB by default).
+      operationId: setKey
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Value stored
+    patch:
+      tags:
+        - Keys
+      summary: Increment or decrement numeric value
+      description: Atomically increment or decrement a numeric value at the given key.
+      operationId: patchKey
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              description: Increment value (positive or negative integer)
+      responses:
+        '200':
+          description: New value
+          content:
+            text/plain:
+              schema:
+                type: string
+    delete:
+      tags:
+        - Keys
+      summary: Delete key
+      description: Delete the key and its value from the bucket.
+      operationId: deleteKey
+      responses:
+        '200':
+          description: Key deleted
+  /{bucket_id}/scripts/{script_name}:
+    parameters:
+      - $ref: '#/components/parameters/BucketId'
+      - in: path
+        name: script_name
+        required: true
+        schema:
+          type: string
+    put:
+      tags:
+        - Scripts
+      summary: Upload script
+      description: Upload a custom Lua script to the bucket.
+      operationId: uploadScript
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              description: Lua script source
+      responses:
+        '200':
+          description: Script uploaded
+    get:
+      tags:
+        - Scripts
+      summary: Execute script
+      description: Execute a previously uploaded script and return its output.
+      operationId: executeScript
+      responses:
+        '200':
+          description: Script output
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  parameters:
+    BucketId:
+      in: path
+      name: bucket_id
+      required: true
+      schema:
+        type: string
+      description: KVdb bucket identifier
+    Key:
+      in: path
+      name: key
+      required: true
+      schema:
+        type: string
+      description: Key within the bucket
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Bucket secret key passed via HTTP Basic auth
+    secretKeyQuery:
+      type: apiKey
+      in: query
+      name: secret_key
