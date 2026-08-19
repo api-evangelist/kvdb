@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "KVdb Buckets Scripts API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scripts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute script",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kvdb.io/:bucket_id/scripts/:script_name",
+            "params": [
+              {
+                "name": "bucket_id",
+                "value": "",
+                "type": "path",
+                "description": "KVdb bucket identifier"
+              },
+              {
+                "name": "script_name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Execute a previously uploaded script and return its output."
+        },
+        {
+          "info": {
+            "name": "Upload script",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://kvdb.io/:bucket_id/scripts/:script_name",
+            "params": [
+              {
+                "name": "bucket_id",
+                "value": "",
+                "type": "path",
+                "description": "KVdb bucket identifier"
+              },
+              {
+                "name": "script_name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Upload a custom Lua script to the bucket."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

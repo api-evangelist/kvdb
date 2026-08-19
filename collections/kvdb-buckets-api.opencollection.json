@@ -1,0 +1,120 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "KVdb Buckets API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Buckets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kvdb.io/",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "email",
+                  "value": ""
+                },
+                {
+                  "name": "secret_key",
+                  "value": ""
+                },
+                {
+                  "name": "read_key",
+                  "value": ""
+                },
+                {
+                  "name": "write_key",
+                  "value": ""
+                },
+                {
+                  "name": "default_ttl",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create a new KVdb bucket. An email is required, optional secret_key, read_key, write_key, and default_ttl can be supplied."
+        },
+        {
+          "info": {
+            "name": "Update bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://kvdb.io/:bucket_id",
+            "params": [
+              {
+                "name": "bucket_id",
+                "value": "",
+                "type": "path",
+                "description": "KVdb bucket identifier"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "write_key",
+                  "value": ""
+                },
+                {
+                  "name": "read_key",
+                  "value": ""
+                },
+                {
+                  "name": "secret_key",
+                  "value": ""
+                },
+                {
+                  "name": "default_ttl",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update bucket settings such as write_key or default_ttl."
+        },
+        {
+          "info": {
+            "name": "Delete bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kvdb.io/:bucket_id",
+            "params": [
+              {
+                "name": "bucket_id",
+                "value": "",
+                "type": "path",
+                "description": "KVdb bucket identifier"
+              }
+            ]
+          },
+          "docs": "Delete the bucket and all its contents."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

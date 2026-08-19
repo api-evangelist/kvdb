@@ -1,0 +1,414 @@
+{
+  "item": [
+    {
+      "id": "bbae2eff-c264-4cdc-a1cf-a7ba86f91f8f",
+      "name": "Buckets",
+      "description": {
+        "content": "Bucket lifecycle operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ffa7be75-a94f-433c-ad93-9c612a9fb40c",
+          "name": "Create bucket",
+          "request": {
+            "name": "Create bucket",
+            "description": {
+              "content": "Create a new KVdb bucket. An email is required, optional secret_key, read_key, write_key, and default_ttl can be supplied.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<email>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "secret_key",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "read_key",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "write_key",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "default_ttl",
+                  "value": "<integer>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8ff96c17-e75e-4674-8be3-ab158524ca90",
+              "name": "Bucket created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "secret_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "read_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "write_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "default_ttl",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "849999c3-c3bc-4945-8c04-a485fcba475b",
+          "name": "Update bucket",
+          "request": {
+            "name": "Update bucket",
+            "description": {
+              "content": "Update bucket settings such as write_key or default_ttl.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ":bucket_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bucket_id",
+                  "description": "(Required) KVdb bucket identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "write_key",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "read_key",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "secret_key",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "default_ttl",
+                  "value": "<integer>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c07ccc1d-1a5a-4d86-8663-fbd212ed6d5e",
+              "name": "Bucket updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ":bucket_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucket_id",
+                      "description": "(Required) KVdb bucket identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "write_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "read_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "secret_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "default_ttl",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4d61d88c-cf7e-4cba-814e-151852e7a9a3",
+          "name": "Delete bucket",
+          "request": {
+            "name": "Delete bucket",
+            "description": {
+              "content": "Delete the bucket and all its contents.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ":bucket_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bucket_id",
+                  "description": "(Required) KVdb bucket identifier"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ff4e620e-8b56-4229-91c0-b6b8fa650805",
+              "name": "Bucket deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ":bucket_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bucket_id",
+                      "description": "(Required) KVdb bucket identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://kvdb.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d552e59c-0063-4a42-918e-055591ae66c7",
+    "name": "KVdb Buckets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "KVdb is a hosted serverless key-value database with a simple REST API. Buckets are namespaces of key-value pairs accessed over HTTPS using standard methods (GET, POST, PATCH, DELETE). KVdb supports access control via secret, read, and write keys, custom Lua scripts, and per-bucket TTLs.\n\nContact Support:\n Name: KVdb",
+      "type": "text/plain"
+    }
+  }
+}
