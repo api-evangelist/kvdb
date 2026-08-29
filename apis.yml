@@ -5,6 +5,17 @@ description: >-
   API. Buckets act as namespaces for keys, with built-in access control via secret, read, and write keys, custom Lua
   scripts, and per-bucket TTLs.
 type: Index
+deliveryModel:
+  model: unknown
+  open_source: false
+  commercial: false
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
