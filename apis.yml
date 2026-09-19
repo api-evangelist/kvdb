@@ -32,6 +32,11 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/kvdb.png
 tags:
+  - Database
+  - Key-Value
+  - NoSQL
+  - Serverless
+tags_raw:
   - Databases
   - Key-Value
   - NoSQL
