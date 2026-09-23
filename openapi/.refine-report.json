@@ -1,9 +1,7 @@
 {
   "provider": "kvdb",
   "sources": [
-    "kvdb-buckets-api-openapi.yml",
-    "kvdb-keys-api-openapi.yml",
-    "kvdb-scripts-api-openapi.yml"
+    "_original/kvdb-openapi.yml"
   ],
   "outputs": [
     "kvdb-buckets-api-openapi.yml",
@@ -13,6 +11,14 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "kvdb-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "kvdb-buckets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kvdb-keys-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kvdb-scripts-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
